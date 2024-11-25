@@ -1,0 +1,30 @@
+<header class="header fixed-top container-fluid p-0 header-bg border-bottom">
+  <div class="container py-2">
+    <div class="row">
+      <div class="col-auto">
+        <a class="navbar-brand col" [routerLink]="'/home'"
+          ><img
+            class="img-fluid pb-2 me-1"
+            [ngSrc]="logo"
+            alt="logo sombrero de cocina"
+            height="32"
+            width="32"
+          />
+          <span class="fs-4 fw-bold text-primary">{{ title }}</span>
+        </a>
+      </div>
+      <div class="col-auto ms-auto me-0">
+        <div class="d-flex flex-row gap-2">
+          <a
+            href="https://github.com/matigaleanodev/cookingRecipes"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="socialbox-link"
+          >
+            <i class="fa-solid fa-code" style="font-size: 15px"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

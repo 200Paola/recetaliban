@@ -1,0 +1,211 @@
+@if (viewRecipe) {
+<article class="container">
+  <div class="row mt-2 mb-2 mb-md-3">
+    <h2 class="title d-flex">
+      <div>
+        <button class="btn text-primary fw-bolder" (click)="goBack()">
+          <i class="fa-solid fa-angles-left"></i>
+        </button>
+      </div>
+      <span class="mx-auto">{{ recipe.title | translate : "es" | async }}</span>
+    </h2>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col-md-4 d-flex flex-column gap-3">
+      <div>
+        <button
+          class="btn btn-secondary text-light fw-bolder"
+          (click)="viewSimilarRecipe(recipe)"
+        >
+          Recetas Similares
+        </button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      @if (recipe.servings) {
+      <div class="d-flex justify-content-between mb-1">
+        <span class="d-flex gap-2 align-items-center">
+          <div
+            class="rounded-circle bg-light d-flex"
+            style="height: 42px; width: 42px"
+          >
+            <img
+              class="img-fluid m-auto"
+              [src]="portion"
+              alt="logo sombrero de cocina"
+              height="32"
+              width="32"
+            />
+          </div>
+          Cantidad: <b>{{ recipe.servings }} porciones</b></span
+        >
+      </div>
+      } @if (recipe.readyInMinutes >= 1) {
+      <div class="d-flex justify-content-between mb-1">
+        <span class="d-flex gap-2 align-items-center">
+          <div
+            class="rounded-circle bg-light d-flex"
+            style="height: 42px; width: 42px"
+          >
+            <img
+              class="img-fluid m-auto"
+              [src]="prepare"
+              alt="logo sombrero de cocina"
+              height="32"
+              width="32"
+            />
+          </div>
+          Listo en <b>{{ recipe.readyInMinutes | minutes }}</b> minutos</span
+        >
+      </div>
+      }
+    </div>
+    <div class="col-md-4">
+      @if (recipe.preparationMinutes >= 1) {
+      <div class="d-flex justify-content-between mb-1">
+        <span class="d-flex gap-2 align-items-center">
+          <div
+            class="rounded-circle bg-light d-flex"
+            style="height: 42px; width: 42px"
+          >
+            <img
+              class="img-fluid m-auto"
+              [src]="preparetime"
+              alt="logo sombrero de cocina"
+              height="32"
+              width="32"
+            />
+          </div>
+          Tiempo de preparación:
+          <b>{{ recipe.cookingMinutes | minutes }}</b> minutos</span
+        >
+      </div>
+      } @if (recipe.cookingMinutes >= 1) {
+      <div class="d-flex justify-content-between mb-1">
+        <span class="d-flex gap-2 align-items-center">
+          <div
+            class="rounded-circle bg-light d-flex"
+            style="height: 42px; width: 42px"
+          >
+            <img
+              class="img-fluid m-auto"
+              [src]="cookingtime"
+              alt="logo sombrero de cocina"
+              height="32"
+              width="32"
+            />
+          </div>
+          Tiempo de cocción:
+          <b>{{ recipe.cookingMinutes | minutes }}</b> minutos</span
+        >
+      </div>
+      }
+    </div>
+  </div>
+  @if (visibleIcons.length > 0) {
+  <div class="row mb-3 d-flex justify-content-center gap-2">
+    @for (iconName of visibleIcons; track iconName) {
+    <div class="col-auto text-center">
+      <div
+        class="d-flex justify-content-center align-items-center rounded rounded-circle bg-light custom-shadow"
+        style="height: 75px; width: 75px"
+      >
+        <img
+          Tooltip
+          [src]="'assets/images/' + iconName + '.png'"
+          style="height: 50px; width: fit-content"
+          [alt]="iconName"
+        />
+      </div>
+      <p class="mt-1 fs-6 fw-bolder">
+        {{ name(iconName) | translate : "es" | async | titlecase }}
+      </p>
+    </div>
+    }
+  </div>
+  }
+  <div class="row mb-3">
+    <div
+      class="col-12 col-lg-6 mb-3 mb-lg-auto order-2 order-md-1 d-flex justify-content-center justify-content-lg-start"
+    >
+      <img
+        [src]="
+          'https://spoonacular.com/recipeImages/' +
+          recipe.id +
+          '-556x370.' +
+          (recipe.imageType ? recipe.imageType : 'jpg')
+        "
+        alt="{{ recipe.title }}"
+        class="img-fluid rounded rounded-3 custom-shadow"
+      />
+    </div>
+    <div
+      style="min-height: 370px"
+      class="col-12 col-lg-6 d-flex bg-light bg-gradient bg-opacity-25 p-3 p-md-5 justify-content-center align-items-center rounded rounded-3 custom-shadow mb-3 mb-md-auto order-1 order-md-2"
+    >
+      <p
+        [innerHTML]="recipe.summary | translate : 'es' | async"
+        class="text-primary"
+      ></p>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <h3 class="mb-2 mb-md-1">
+      <img
+        class="img-fluid pb-2 me-1"
+        [src]="ingredient"
+        alt="logo sombrero de cocina"
+        height="32"
+        width="32"
+      />
+      Ingredientes
+    </h3>
+  </div>
+  <div
+    class="row d-flex px-md-5 mb-3 justify-content-center justify-content-md-start"
+  >
+    @for (ingredient of recipe.extendedIngredients; track ingredient) {
+    <div class="col-auto">
+      <app-recipe-ingredient [ingredient]="ingredient" />
+    </div>
+    }
+  </div>
+  <div class="row mb-3">
+    <h3 class="mb-2 mb-md-1">
+      <img
+        class="img-fluid"
+        [src]="instructions"
+        alt="logo sombrero de cocina"
+        height="32"
+        width="32"
+      />
+      Pasos a Seguir
+    </h3>
+  </div>
+  <div
+    class="row bg-light bg-gradient bg-opacity-25 rounded rounded-3 custom-shadow mb-3 p-0 overflow-hidden"
+  >
+    @for ( step of recipe.analyzedInstructions[0]!.steps; track step; let odd =
+    $odd; let even = $even) {
+    <div
+      class="col-12 d-flex p-3 bg-opacity-25"
+      style="min-height: 100px"
+      [ngClass]="{ 'bg-light': odd, 'bg-dark': even }"
+    >
+      <img
+        class="img-fluid pb-2 me-1"
+        style="height: 32px"
+        [src]="stepimg"
+        alt="logo sombrero de cocina"
+        height="32"
+        width="32"
+      />
+      <p class="list-group-item">
+        {{ step.step | translate : "es" | async }}
+      </p>
+    </div>
+    }
+  </div>
+</article>
+}

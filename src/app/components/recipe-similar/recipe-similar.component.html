@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row mt-2 mb-2 mb-md-3">
+    
+    <h2 class="title d-flex">
+      <div>
+        <button class="btn text-primary  fw-bolder"(click)="goBack()" > <i class="fa-solid fa-angles-left"></i></button>
+      </div>
+      <span class="mx-auto">Recetas Similares a {{ recipe.title | translate : "es" | async }}</span>
+    </h2>
+  </div>
+  @if (viewList) {
+<section class="row">
+    @for (recipe of recipeList; track recipe; let i = $index) {
+  <div
+     
+      class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3"
+      [@fadeInOnEnter]="{
+        value: '',
+        params: { duration: 1500, delay: i * 300 }
+      }"
+    >
+      <app-recipe-card [recipe]="recipe" [index]="i + 1" />
+    </div>
+}
+  </section>
+}
+</div>

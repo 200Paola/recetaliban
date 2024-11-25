@@ -1,0 +1,36 @@
+<div class="container">
+  <section class="row hero my-2 justify-content-center">
+    <div class="col-12 col-md-5 order-2 order-md-1 d-flex flex-column align-items-end my-auto">
+      <p class=" text-center fs-2 fw-bold"><span class="text-danger">Sabores del mundo</span> en tu mano. Descubre el <span class="text-warning">placer de cocinar</span> con recetas en tu pantalla!!</p>
+      <div class="d-flex flex-wrap align-items-center justify-content-center mx-auto" style="max-width: 250px;">
+        <form class="input-group rounded" autocomplete="off">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+          <input class="form-control border-start-0 text-end"  type="text" name="search" id="search" aria-label="Buscar" placeholder="buscar receta" [(ngModel)]="query" (keydown.enter)="searchRecipe()">
+        </form>
+      </div>
+    </div>
+    <div class="col-12 col-md-auto justify-content-center order-1 order-md-2">
+      <picture class="img-wrapped">
+        <img src="assets/images/hero.png" alt="Cocinero levantando una bandeja" class="img-fluid" style="height: 400px;">
+      </picture>
+    </div>
+  </section>
+  @if (viewList) {
+<section class="row">
+    @for (recipe of recipeList; track recipe; let i = $index) {
+  <div
+     
+      class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3"
+      [@fadeInOnEnter]="{
+        value: '',
+        params: { duration: 1500, delay: i * 300 }
+      }"
+    >
+      <app-recipe-card [recipe]="recipe" [index]="i + 1" />
+    </div>
+}
+  </section>
+}
+</div>

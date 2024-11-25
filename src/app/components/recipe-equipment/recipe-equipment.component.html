@@ -1,0 +1,15 @@
+<div class="recipe-equipment" style="height: 200px; width: 100px;">
+    <div class="image-wrapped d-flex">
+      <img
+        [src]="
+          'https://spoonacular.com/cdn/equipment_100x100/' + equipment.image
+        "
+        alt="{{ equipment.name }}"
+        class="img-fluid image"
+      />
+    </div>
+  
+    <div class="text-center">
+      <p class="fs-6">{{ equipment.name }}</p>
+    </div>
+  </div>
