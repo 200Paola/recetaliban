@@ -1,17 +1,3 @@
-# Recipe Food Tracker
-
-![Recipe Food Tracker](https://raw.githubusercontent.com/matigaleanodev/cookingRecipes/main/src/assets/images/logo.png)
-
-## Descripción
-
-Recipe Food Tracker es una aplicación diseñada para ayudarte a encontrar recetas de cocina deliciosas y creativas. Si alguna vez te has preguntado qué cocinar para una comida especial o simplemente quieres experimentar en la cocina, esta aplicación es perfecta para ti. Con una amplia base de datos de recetas y funciones avanzadas de búsqueda, podrás descubrir, planificar y disfrutar de nuevas delicias culinarias.
-
-## Capturas de Pantalla
-
-![Captura de Pantalla 1](https://raw.githubusercontent.com/matigaleanodev/cookingRecipes/main/src/assets/screenshots/screen-1.png)
-![Captura de Pantalla 2](https://raw.githubusercontent.com/matigaleanodev/cookingRecipes/main/src/assets/screenshots/screen-2.png)
-![Captura de Pantalla 3](https://raw.githubusercontent.com/matigaleanodev/cookingRecipes/main/src/assets/screenshots/screen-3.png)
-
 ## Tecnologías Utilizadas
 
 - **Angular:** Utilizamos Angular como nuestro marco de desarrollo front-end para crear una experiencia de usuario dinámica y fluida.
@@ -39,14 +25,3 @@ Para ejecutar la aplicación en tu entorno local, sigue estos pasos:
 5. Ejecuta `ng serve` para iniciar el servidor de desarrollo local.
 6. Abre tu navegador y visita `http://localhost:4200` para ver la aplicación en funcionamiento.
 
-## Contacto
-
-Para cualquier consulta, sugerencia o colaboración, no dudes en contactarnos:
-
-- LinkedIn: [Matias Galeano](https://linkedin.com/in/matigaleanodev/)
-- Portafolio: [https://matiasgaleano.com.ar/](https://matiasgaleano.com.ar/)
-- Correo Electrónico: [contacto@matiasgaleano.com.ar](mailto:contacto@matiasgaleano.com.ar)
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT.
