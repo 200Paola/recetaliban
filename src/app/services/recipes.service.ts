@@ -1,67 +1,45 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { QueryResult, RecipeInfo, RecipeList } from '../models/recipe.model';
+import { Cacheable, fromCache, CacheConfig, toCache } from '@angular/service-worker'; // Import caching utilities
+
+// ... rest of your RecipesService imports and code
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipesService {
-  
-  dataList: RecipeInfo[] = [];
-  private apiKey: string = environment.RECIPE_API_KEY;
-  private apiUrl: string = 'https://api.spoonacular.com';
 
-  private http = inject(HttpClient)
+  constructor(private http: HttpClient) {}
 
-  searchRecipes(keyword: string) {
-    const url = `${this.apiUrl}/recipes/complexSearch`;
+  @Cacheable(
+    cacheName: 'recipes', // Name of the cache from ngsw-config.json
+    strategy: 'staleWhileRevalidate', // Caching strategy
+    maxAge: 3 * 24 * 60 * 60 * 1000 // Max age of 3 days in milliseconds
+  )
+  searchRecipes(keyword: string): Observable<QueryResult> {
+    const url = ${this.apiUrl}/recipes/complexSearch;
     const params = {
       query: keyword,
       number: 24,
       apiKey: this.apiKey,
     };
-    return this.http.get<QueryResult>(url, { params });
-  }
 
-  especificRecipes(id: number) {
-    const url = `${this.apiUrl}/recipes/${id}/information`;
-    const params = {
-      apiKey: this.apiKey,
-    };
-    return this.http.get<RecipeInfo>(url, { params });
-  }
+    return fromCache(this.http.get<QueryResult>(url, { params }))
+      .pipe(
+        // Handle the cached response if available
+        mergeMap(cachedData => {
+          if (cachedData) {
+            return of(cachedData); // Return cached data if present
+          }
 
-  similarRecipes(id: number) {
-    const url = `${this.apiUrl}/recipes/${id}/similar`;
-    const params = {
-      apiKey: this.apiKey,
-    };
-    return this.http.get<RecipeInfo[]>(url, { params });
-  }
-
-  randomRecipes(limit: number) {
-    const url = `${this.apiUrl}/recipes/random`;
-    const params = {
-      apiKey: this.apiKey,
-      number: limit,
-      limitLicense: true
-    };
-    return this.http.get<RecipeList>(url, { params });
-  }
-
-  
-  setDataStorage(data:  RecipeInfo[]) {
-    const jsonData = JSON.stringify(data);
-    sessionStorage.setItem('RecipeList', jsonData);
-  }
-
-  getDataStorage(): RecipeInfo[] {
-    const jsonData = sessionStorage.getItem('RecipeList');
-    if (jsonData) {
-      return JSON.parse(jsonData);
-    }
-    return []
-  }
-
-}
+          // If no cached data, fetch from network and update cache
+          return this.http.get<QueryResult>(url, { params }).pipe(
+            tap(data => toCache(this.http.get(url, { params })))
+          );
+        }),
+        catchError(error => {
+          // Handle network errors gracefully
+          console.error('Failed to fetch recipes:', error);
+          return throwError(error);
+        })
+      );

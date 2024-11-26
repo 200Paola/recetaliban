@@ -1,0 +1,31 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/index.html",
+          "/*.css",
+          "/*.js",
+          // Add specific images or assets you want prefetched
+          "assets/*.png" // Example
+        ]
+      }
+    },
+    {
+      "name": "recipes",
+      "installMode": "lazy",
+      "cacheConfig": {
+        "strategy": "staleWhileRevalidate",
+        "maxAge": "3d" // Cache recipes for a maximum of 3 days
+      },
+      "urls": [
+        "https://api.spoonacular.com/recipes/complexSearch*",
+        "https://api.spoonacular.com/recipes/**"
+      ]
+    }
+  ]
+}
